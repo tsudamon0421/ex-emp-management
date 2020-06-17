@@ -55,7 +55,7 @@ public class AdministratorRepository {
 		String sql = "SELECT id,name,mail_address,password FROM administrators "
 				+ "WHERE mail_address = :mailAddress AND password =:password;";
 
-		SqlParameterSource param = new MapSqlParameterSource().addValue("mailAddres", mailAddress).addValue("password",
+		SqlParameterSource param = new MapSqlParameterSource().addValue("mailAddress", mailAddress).addValue("password",
 				password);
 
 		// 1件も存在しない場合にnullを返し、存在した場合に1件のオブジェクトを返す
