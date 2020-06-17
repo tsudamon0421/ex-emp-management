@@ -12,6 +12,12 @@ import org.springframework.stereotype.Repository;
 
 import jp.co.sample.domain.Employee;
 
+/**
+ * employeesテーブルを操作するレポジトリ.
+ * 
+ * @author hikaru.tsuda
+ *
+ */
 @Repository
 public class EmployeeRepository {
 
@@ -38,7 +44,7 @@ public class EmployeeRepository {
 	/**
 	 * 従業員一覧情報を入社日(降)順で取得する (従業員が存在しない場合はサイズ0件の従業員一覧を返す).
 	 * 
-	 * @return List<Employee>
+	 * @return 従業員一覧
 	 */
 	public List<Employee> findAll() {
 		String sql = "SELECT id,name,image,gender,hire_date,mail_address,zip_code,address,telephone,salary,characteristics,dependents_count"
@@ -51,8 +57,8 @@ public class EmployeeRepository {
 	/**
 	 * 主キーから従業員情報を取得する（従業員が存在しない場合はSpringが自動的に例外を発生する).
 	 * 
-	 * @param id
-	 * @return Employee
+	 * @param id ID
+	 * @return Employee 従業員情報
 	 */
 	public Employee load(Integer id) {
 		String sql = "SELECT id,name,image,gender,hire_date,mail_address,zip_code,address,telephone,salary,characteristics,dependents_count"
@@ -65,7 +71,7 @@ public class EmployeeRepository {
 	/**
 	 * 従業員情報を変更する.
 	 * 
-	 * @param employee
+	 * @param employee 従業員情報
 	 */
 	public void update(Employee employee) {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(employee);

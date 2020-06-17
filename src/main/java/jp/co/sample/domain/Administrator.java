@@ -8,29 +8,24 @@ package jp.co.sample.domain;
  */
 public class Administrator {
 
-	/* ID */
+	/** ID */
 	private Integer id;
-	/* 名前 */
+	/** 名前 */
 	private String name;
-	/* メールアドレス */
+	/** メールアドレス */
 	private String mailAddress;
-	/* パスワード */
+	/** パスワード */
 	private String password;
 
 	/**
 	 * 引数なしのコンストラクタ.
 	 */
 	public Administrator() {
-		
+
 	}
-	
-	
+
 	/**
-	 * すべてのフィールドを引数に取るコンストラクタ.
-	 * @param id
-	 * @param name
-	 * @param mailAddress
-	 * @param password
+	 * すべてのフィールドを初期化するコンストラクタ.
 	 */
 	public Administrator(Integer id, String name, String mailAddress, String password) {
 		super();
@@ -39,8 +34,6 @@ public class Administrator {
 		this.mailAddress = mailAddress;
 		this.password = password;
 	}
-
-
 
 	@Override
 	public String toString() {
