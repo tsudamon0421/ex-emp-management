@@ -52,10 +52,11 @@ public class AdministratorRepository {
 	 * @return Administrator 管理者情報
 	 */
 	public Administrator findByMailAddressAndPassword(String mailAddress, String password) {
-		String sql = "SELECT id,name,mail_address,password FROM administrators "+
-	"WHERE mail_address = :mailAddress AND password =:password;";
-		
-		SqlParameterSource param = new MapSqlParameterSource().addValue("mailAddres", mailAddress).addValue("password", password);
+		String sql = "SELECT id,name,mail_address,password FROM administrators "
+				+ "WHERE mail_address = :mailAddress AND password =:password;";
+
+		SqlParameterSource param = new MapSqlParameterSource().addValue("mailAddres", mailAddress).addValue("password",
+				password);
 
 		// 1件も存在しない場合にnullを返し、存在した場合に1件のオブジェクトを返す
 		List<Administrator> administratorList = template.query(sql, param, ADMINISTRATOR_ROW_MAPPER);

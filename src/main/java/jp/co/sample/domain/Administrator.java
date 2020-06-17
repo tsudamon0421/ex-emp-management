@@ -21,7 +21,6 @@ public class Administrator {
 	 * 引数なしのコンストラクタ.
 	 */
 	public Administrator() {
-
 	}
 
 	/**
