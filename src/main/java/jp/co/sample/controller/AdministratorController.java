@@ -1,8 +1,11 @@
 package jp.co.sample.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -18,6 +21,9 @@ public class AdministratorController {
 	@Autowired
 	private AdministratorService administratorService;
 
+	@Autowired
+	private HttpSession session;// ログインした管理者の名前をセッションスコープに入れてログイン後のページに表示するため
+
 	/**
 	 * 管理者登録情報を受け取るInsertAdministratorFormをインスタンス化しそのまま返す.
 	 * 
@@ -29,13 +35,23 @@ public class AdministratorController {
 	}
 
 	/**
+	 * ログイン時に使用するフォームをインスタンス化しそのまま返す.
+	 * 
+	 * @return LoginForm
+	 */
+	@ModelAttribute
+	public LoginForm setUpLoginForm() {
+		return new LoginForm();
+	}
+
+	/**
 	 * 管理者情報登録画面にフォワードする.
 	 * 
-	 * @return administrator/insert.html
+	 * @return 管理者情報登録画面
 	 */
 	@RequestMapping("/toInsert")
 	public String toInsert() {
-		return "administrator/insert.html";
+		return "administrator/insert";
 	}
 
 	/**
@@ -54,16 +70,6 @@ public class AdministratorController {
 	}
 
 	/**
-	 * ログイン時に使用するフォームをインスタンス化しそのまま返す.
-	 * 
-	 * @return LoginForm
-	 */
-	@ModelAttribute
-	public LoginForm setUpLoginForm() {
-		return new LoginForm();
-	}
-
-	/**
 	 * 管理者ログイン画面にフォワード処理.
 	 * 
 	 * @return administrator/login.html
@@ -71,5 +77,17 @@ public class AdministratorController {
 	@RequestMapping("/")
 	public String toLogin() {
 		return "administrator/login.html";
+	}
+
+	@RequestMapping("/login")
+	public String login(LoginForm form, Model model) {
+		Administrator administrator = administratorService.login(form.getMailAddress(), form.getPassword());
+		if (administrator == null) {
+			model.addAttribute("message", "メールアドレスまたはパスワードが不正です");
+			return "administrator/login.html";
+		} else {
+			session.setAttribute("administratorName", administrator.getName());
+			return "forward:/employee/showList";
+		}
 	}
 }

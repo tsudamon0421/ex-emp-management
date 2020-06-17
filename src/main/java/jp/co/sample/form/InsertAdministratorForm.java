@@ -2,7 +2,7 @@ package jp.co.sample.form;
 
 
 /**
- * 管理者登録情報を受け取るフォームクラス
+ * 管理者登録情報を受け取るフォームクラス.
  * 
  * @author hikaru.tsuda
  *
