@@ -16,7 +16,7 @@ public class AdministratorService {
 
 	
 	/**
-	 * 管理者所法を挿入する.
+	 * 管理者情報を挿入する.
 	 * 
 	 * @param administrator管理者情報
 	 */
