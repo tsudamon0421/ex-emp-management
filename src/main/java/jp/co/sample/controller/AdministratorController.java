@@ -78,7 +78,14 @@ public class AdministratorController {
 	public String toLogin() {
 		return "administrator/login.html";
 	}
-
+	
+	/**
+	 * 
+	 * ログイン処理メソッド
+	 * @param form ログイン処理用フォーム
+	 * @param model　ログインエラー文用のリクエストスコープ
+	 * @return　エラー時はログイン画面、成功時は従業員情報画面にフォワード
+	 */
 	@RequestMapping("/login")
 	public String login(LoginForm form, Model model) {
 		Administrator administrator = administratorService.login(form.getMailAddress(), form.getPassword());
