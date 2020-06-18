@@ -80,8 +80,8 @@ public class AdministratorController {
 	}
 	
 	/**
+	 * ログイン処理メソッド.
 	 * 
-	 * ログイン処理メソッド
 	 * @param form ログイン処理用フォーム
 	 * @param model　ログインエラー文用のリクエストスコープ
 	 * @return　エラー時はログイン画面、成功時は従業員情報画面にフォワード
@@ -97,4 +97,16 @@ public class AdministratorController {
 			return "forward:/employee/showList";
 		}
 	}
+	
+	/**
+	 * ログアウト処理メソッド.
+	 * 
+	 * @return ログイン画面にリダイレクト
+	 */
+	@RequestMapping("/logout")
+	public String logout() {
+		session.invalidate();
+		return "redirect:/";
+	}
+
 }
