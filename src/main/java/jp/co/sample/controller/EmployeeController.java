@@ -57,7 +57,25 @@ public class EmployeeController {
 	public String showDetail(String id, Model model) {
 		Employee employee = employeeService.showDetail(Integer.parseInt(id));
 		model.addAttribute("employee", employee);
-		return "employee/detail.html";
+		return "employee/detail";
+	}
+	
+	/**
+	 * 従業員情報（ここでは扶養人数のみ）を更新する.
+	 * 
+	 * @param form 従業員情報のidを使用
+	 * @return　従業員情報一覧画面にリダイレクトする
+	 */
+	@RequestMapping("/update")
+	public String update(UpdateEmployeeForm form, Model model) {
+		Employee employee = employeeService.showDetail(Integer.parseInt(form.getId()));
+		employee.setDependentsCount(Integer.parseInt(form.getDependentsCount()));
+		employeeService.update(employee);
+//		return "forward:/employee/showList";
+//		return "employee/list";
+//		return showList(model);
+		return "redirect:/employee/showList";
+		
 	}
 
 }
