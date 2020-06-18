@@ -2,6 +2,8 @@ package jp.co.sample.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +28,9 @@ public class EmployeeController {
 
 	@Autowired
 	private EmployeeService employeeService;
+	
+	@Autowired
+	HttpSession session;
 
 	@ModelAttribute
 	public UpdateEmployeeForm setUpUpdateEmployeeForm() {
@@ -40,6 +45,12 @@ public class EmployeeController {
 	 */
 	@RequestMapping("/showList")
 	public String showList(Model model) {
+		
+		//ログインしていなければログイン画面に遷移
+		if(session.getAttribute("administratorName") == null) {
+			return "redirect:/";
+		}
+		
 		List<Employee> employeeList = employeeService.showList();
 		model.addAttribute("employeeList", employeeList);
 
@@ -55,6 +66,12 @@ public class EmployeeController {
 	 */
 	@RequestMapping("/showDetail")
 	public String showDetail(String id, Model model) {
+		
+		//ログインしていなければログイン画面に遷移
+		if(session.getAttribute("administratorName") == null) {
+			return "redirect:/";
+		}
+		
 		Employee employee = employeeService.showDetail(Integer.parseInt(id));
 		model.addAttribute("employee", employee);
 		return "employee/detail";
@@ -68,15 +85,22 @@ public class EmployeeController {
 	 */
 	@RequestMapping("/update")
 	public String update(@Validated UpdateEmployeeForm form, BindingResult result, Model model) {
+		//ログインしていなければログイン画面に遷移
+		if(session.getAttribute("administratorName") == null) {
+			return "redirect:/";
+		}
+		
 		if (result.hasErrors()) {
 			return showDetail(form.getId(), model);
-
 		}
 		Employee employee = employeeService.showDetail(Integer.parseInt(form.getId()));
 		employee.setDependentsCount(Integer.parseInt(form.getDependentsCount()));
 		employeeService.update(employee);
-//		return showList(model);
 		return "redirect:/employee/showList";
 	}
+	
+//	@RequestMapping("/update2")
+//	public String update2() {
+//	}
 
 }
